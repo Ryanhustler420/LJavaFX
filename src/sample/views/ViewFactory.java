@@ -8,68 +8,54 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import sample.controllers.AbstractController;
+import sample.controllers.EmailDetailsView;
+import sample.controllers.MainView;
+import sample.controllers.ModelAccess;
 
 import java.net.URL;
 
 public class ViewFactory {
 
-    public Scene getMainScene(double widht, double height) {
-        Pane pane;
+    public static ViewFactory singleton = new ViewFactory();
+    private static boolean mainViewInitialized = false;
 
-        try {
-            pane = FXMLLoader.load(getClass().getResource("layouts/main_stage_view.fxml"));
-        } catch (Exception e) {
-            pane = null;
-            e.printStackTrace();
-        }
+    private final String DEFAULT_STYLE_SHEET = "styles.css";
+    private final String EMAIL_DETAILS_FXML = "layouts/email_details_view.fxml";
+    private final String MAIN_FXML = "layouts/main_stage_view.fxml";
 
-        Scene scene = new Scene(pane, widht, height);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        return scene;
-    }
+    private ModelAccess modelAccess = new ModelAccess();
 
-    public Scene getMainScene() {
-        Pane pane;
+    private MainView mainViewController;
+    private EmailDetailsView emailDetailsController;
 
-        try {
-            pane = FXMLLoader.load(getClass().getResource("layouts/main_stage_view.fxml"));
-        } catch (Exception e) {
-            pane = null;
-            e.printStackTrace();
-        }
-
-        Scene scene = new Scene(pane);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        return scene;
+    public Scene getMainScene() throws Exception {
+        if (!mainViewInitialized) {
+            mainViewInitialized = true;
+            mainViewController = new MainView(modelAccess);
+            return initializeScene(MAIN_FXML, mainViewController);
+        } else throw new Exception("Illegal action invocation preformed, main scene already initialized");
     }
 
     public Scene getMessageBoxScene() {
-        Pane pane;
-
-        try {
-            pane = FXMLLoader.load(getClass().getResource("layouts/email_details_view.fxml"));
-        } catch (Exception e) {
-            pane = null;
-            e.printStackTrace();
-        }
-
-        Scene scene = new Scene(pane);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-        return scene;
+        emailDetailsController = new EmailDetailsView(modelAccess);
+        return initializeScene(EMAIL_DETAILS_FXML, emailDetailsController);
     }
 
-    public Scene getMessageBoxScene(double width, double height) {
-        Pane pane;
-
+    private Scene initializeScene(String fxmlPath, AbstractController abstractController) {
+        FXMLLoader loader;
+        Parent parent;
+        Scene scene;
         try {
-            pane = FXMLLoader.load(getClass().getResource("layouts/email_details_view.fxml"));
+            loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            loader.setController(abstractController);
+            parent = loader.load();
         } catch (Exception e) {
-            pane = null;
-            e.printStackTrace();
+            return null;
         }
 
-        Scene scene = new Scene(pane, width, height);
-        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        scene = new Scene(parent);
+        scene.getStylesheets().add(getClass().getResource(DEFAULT_STYLE_SHEET).toExternalForm());
         return scene;
     }
 

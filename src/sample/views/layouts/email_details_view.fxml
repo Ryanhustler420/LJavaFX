@@ -7,19 +7,24 @@
 <?import javafx.scene.web.WebView?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.EmailDetailsView">
-   <children>
-      <WebView fx:id="webview" layoutX="75.0" layoutY="59.0" prefHeight="341.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="59.0" />
-      <Label fx:id="subjectLabel" layoutX="51.0" layoutY="9.0" text="Subject:" textFill="#000000b4" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="9.0">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <Label fx:id="senderLabel" layoutX="51.0" layoutY="31.0" text="Sender:" textFill="#0000006a" AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="31.0">
-         <font>
-            <Font name="System Bold Italic" size="8.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="8.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
-   </children>
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <WebView fx:id="webview" layoutX="75.0" layoutY="59.0" prefHeight="341.0" prefWidth="600.0"
+                 AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                 AnchorPane.topAnchor="59.0"/>
+        <Label fx:id="subjectLabel" layoutX="51.0" layoutY="9.0" text="Subject:" textFill="#000000b4"
+               AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="9.0">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Label>
+        <Label fx:id="senderLabel" layoutX="51.0" layoutY="31.0" text="Sender:" textFill="#0000006a"
+               AnchorPane.leftAnchor="51.0" AnchorPane.topAnchor="31.0">
+            <font>
+                <Font name="System Bold Italic" size="8.0"/>
+            </font>
+        </Label>
+        <ImageView fitHeight="39.0" fitWidth="37.0" layoutX="8.0" layoutY="11.0" pickOnBounds="true"
+                   preserveRatio="true"/>
+    </children>
 </AnchorPane>

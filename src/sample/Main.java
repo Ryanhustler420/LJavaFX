@@ -9,10 +9,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        ViewFactory viewFactory = new ViewFactory();
+        ViewFactory viewFactory = ViewFactory.singleton;
         primaryStage.setTitle("Raisehand Networks");
         primaryStage.getIcons().add(new Image("/sample/views/icons/icon_large.png"));
-        primaryStage.setScene(viewFactory.getMainScene(1600, 720));
+        primaryStage.setScene(viewFactory.getMainScene());
         primaryStage.show();
     }
 

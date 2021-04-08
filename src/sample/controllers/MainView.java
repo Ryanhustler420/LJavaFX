@@ -11,19 +11,21 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import sample.middleware.Singleton;
 import sample.views.ViewFactory;
 
 import java.net.URL;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 
-public class MainView implements Initializable {
+public class MainView extends AbstractController implements Initializable {
 
     private SampleData sampleData = new SampleData();
     private TreeItem<String> root = new TreeItem<>();
     private MenuItem showDetails = new MenuItem("Show Details");
-    private Singleton singleton;
+
+    public MainView(ModelAccess access) {
+        super(access);
+    }
 
     @FXML
     private Button newButton;
@@ -53,9 +55,7 @@ public class MainView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-        ViewFactory viewFactory = new ViewFactory();
-        singleton = Singleton.getInstance();
+        ViewFactory viewFactory = ViewFactory.singleton;
 
         subjectCol.setCellValueFactory(new PropertyValueFactory<>("Subject"));
         senderCol.setCellValueFactory(new PropertyValueFactory<>("Sender"));
@@ -98,12 +98,12 @@ public class MainView implements Initializable {
             EmailMessageBean messageBean = emailTableView.getSelectionModel().getSelectedItem();
             if (messageBean == null) return;
             messageRenderer.getEngine().loadContent(messageBean.getBody());
-            singleton.setMessage(messageBean);
+            getModelAccess().setSelectedMessage(messageBean);
         });
 
         showDetails.setOnAction(event -> {
             Stage stage = new Stage();
-            Scene messageBoxScene = viewFactory.getMessageBoxScene(1024, 600);
+            Scene messageBoxScene = viewFactory.getMessageBoxScene();
 
             stage.getIcons().add(new Image("/sample/views/icons/icon_large.png"));
             stage.setTitle("Message Box");
