@@ -1,21 +1,20 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import sample.views.ViewFactory;
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+    public void start(Stage primaryStage) throws Exception {
+        ViewFactory viewFactory = new ViewFactory();
+        primaryStage.setTitle("Raisehand Networks");
+        primaryStage.getIcons().add(new Image("/sample/views/icons/icon_large.png"));
+        primaryStage.setScene(viewFactory.getMainScene(1600, 720));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
