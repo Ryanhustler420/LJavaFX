@@ -57,4 +57,13 @@ public class EmailMessageBean extends AbstractTableItem {
         return returnValue;
     }
 
+    @Override
+    public String toString() {
+        return "EmailMessageBean{" +
+                "subject=" + subject +
+                ", sender=" + sender +
+                ", size=" + size +
+                ", body='" + body + '\'' +
+                '}';
+    }
 }
