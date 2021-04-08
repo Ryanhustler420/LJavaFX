@@ -6,14 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import sample.controllers.AbstractController;
 import sample.controllers.EmailDetailsView;
 import sample.controllers.MainView;
 import sample.controllers.ModelAccess;
-
-import java.net.URL;
 
 public class ViewFactory {
 

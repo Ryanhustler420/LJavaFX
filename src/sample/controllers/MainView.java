@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import sample.models.table.BoldableRowFactory;
 import sample.views.ViewFactory;
 
 import java.net.URL;
@@ -53,8 +54,17 @@ public class MainView extends AbstractController implements Initializable {
         System.out.println("New Button");
     }
 
+    @FXML
+    void changeReadAction(ActionEvent event) {
+        EmailMessageBean messageBean = getModelAccess().getSelectedMessage();
+        if (messageBean == null) return;
+        boolean value = messageBean.isRead();
+        messageBean.setRead(!value);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        emailTableView.setRowFactory(e -> new BoldableRowFactory());
         ViewFactory viewFactory = ViewFactory.singleton;
 
         subjectCol.setCellValueFactory(new PropertyValueFactory<>("Subject"));
