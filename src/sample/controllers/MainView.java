@@ -1,7 +1,11 @@
 package sample.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import sample.models.beans.EmailAccountBean;
 import sample.models.beans.EmailMessageBean;
-import sample.models.SampleData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,7 +25,6 @@ import java.util.ResourceBundle;
 
 public class MainView extends AbstractController implements Initializable {
 
-    private SampleData sampleData = new SampleData();
     private MenuItem showDetails = new MenuItem("Show Details");
 
     public MainView(ModelAccess access) {
@@ -51,7 +54,24 @@ public class MainView extends AbstractController implements Initializable {
 
     @FXML
     void newButtonAction(ActionEvent event) {
-        System.out.println("New Button");
+
+        Service<Void> emailService = new Service<Void>() {
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        ObservableList<EmailMessageBean> data = getModelAccess().getSelectedFolder().getData();
+                        EmailAccountBean emailAccountBean = new EmailAccountBean("nahi@gmail.com", "@dona.io");
+                        emailAccountBean.addEmailsToData(data);
+                        return null;
+                    }
+                };
+            }
+        };
+
+        emailService.start();
+
     }
 
     @FXML
@@ -96,12 +116,7 @@ public class MainView extends AbstractController implements Initializable {
         EmailFolderBean<String> Sent = new EmailFolderBean<>("Sent", "CompleteSent");
         Sent.getChildren().add(new EmailFolderBean<>("SubSentDraft", "CompleteSubSentDraft"));
         EmailFolderBean<String> Spam = new EmailFolderBean<>("Spam", "CompleteSpam");
-
         raisehand.getChildren().addAll(Inbox, Sent, Spam);
-
-        Inbox.getData().addAll(SampleData.Inbox);
-        Inbox.getData().addAll(SampleData.Sent);
-        Inbox.getData().addAll(SampleData.Spam);
 
         emailTableView.setContextMenu(new ContextMenu(showDetails));
 
